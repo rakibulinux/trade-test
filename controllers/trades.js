@@ -3,20 +3,24 @@ const Trade = require('../models/trades');
 module.exports.createTrade = async (req, res) => {
   try {
     const trade = await Trade.create(req.body);
-    res.json(trade);
+    res.status(201).json(trade); // Set the status code to 201
   } catch (error) {
     res.status(500).send(error.message);
   }
-}
+};
+
 
 module.exports.getTrade = async (req, res) => {
   try {
-    const trades = await Trade.findAll();
+    const trades = await Trade.findAll({
+      where: { type: req.query.type } // Filter by trade type
+    });
     res.json(trades);
   } catch (error) {
     res.status(500).send(error.message);
   }
-}
+};
+
 
 module.exports.getSpecificTrade = async (req, res) => {
   try {
@@ -24,12 +28,13 @@ module.exports.getSpecificTrade = async (req, res) => {
     if (trade) {
       res.json(trade);
     } else {
-      res.status(404).send('Trade not found');
+      res.status(400).send('Trade not found'); // Set the status code to 400
     }
   } catch (error) {
     res.status(500).send(error.message);
   }
-}
+};
+
 
 module.exports.updateSpecificTrade = async (req, res) => {
   try {
@@ -40,12 +45,13 @@ module.exports.updateSpecificTrade = async (req, res) => {
     if (numUpdated) {
       res.json(updatedTrade[0]);
     } else {
-      res.status(404).send('Trade not found');
+      res.status(400).send('Trade not found'); // Set the status code to 400
     }
   } catch (error) {
     res.status(500).send(error.message);
   }
-}
+};
+
 
 module.exports.deleteSpecificTrade = async (req, res) => {
   try {
@@ -55,9 +61,9 @@ module.exports.deleteSpecificTrade = async (req, res) => {
     if (numDeleted) {
       res.sendStatus(204);
     } else {
-      res.status(404).send('Trade not found');
+      res.status(400).send('Trade not found'); // Set the status code to 400
     }
   } catch (error) {
     res.status(500).send(error.message);
   }
-}
+};
