@@ -37,7 +37,7 @@ module.exports.getSpecificTrade = async (req, res) => {
     if (trade) {
       res.json(trade);
     } else {
-      res.status(400).send('Trade not found'); // Set the status code to 400
+      res.status(404).send('Trade not found'); // Set the status code to 400
     }
   } catch (error) {
     res.status(500).send(error.message);
