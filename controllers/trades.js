@@ -11,13 +11,22 @@ module.exports.createTrade = async (req, res) => {
 
 
 module.exports.getTrade = async (req, res) => {
-  try {
-    const trades = await Trade.findAll({
-      where: { type: req.query.type } // Filter by trade type
-    });
-    res.json(trades);
+try {
+    let trades = await Trade.findAll();
+    
+    if (req.query.type) {
+      trades = trades.filter(trade => trade.type === req.query.type);
+    }
+    
+    if (req.query.user_id) {
+      trades = trades.filter(trade => trade.user_id === Number(req.query.user_id));
+    }
+    
+    trades = trades.sort((a, b) => a.id - b.id);
+    
+    res.status(200).json(trades);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ error: "Unable to retrieve trades" });
   }
 };
 
