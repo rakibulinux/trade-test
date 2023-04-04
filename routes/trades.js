@@ -14,7 +14,7 @@ router.get('/:id', getSpecificTrade);
 
 // Update a specific trade by id
 router.put('/:id', updateSpecificTrade);
-
+router.patch('/:id', updateSpecificTrade);
 // Delete a specific trade by id
 router.delete('/:id', deleteSpecificTrade);
 
