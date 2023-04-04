@@ -45,7 +45,7 @@ module.exports.updateSpecificTrade = async (req, res) => {
     if (numUpdated) {
       res.json(updatedTrade[0]);
     } else {
-      res.status(400).send('Trade not found'); // Set the status code to 400
+      res.status(405).send('Trade not found'); // Set the status code to 405
     }
   } catch (error) {
     res.status(500).send(error.message);
@@ -59,7 +59,7 @@ module.exports.deleteSpecificTrade = async (req, res) => {
       where: { id: req.params.id },
     });
     if (numDeleted) {
-      res.sendStatus(204);
+      res.sendStatus(405);
     } else {
       res.status(400).send('Trade not found'); // Set the status code to 400
     }
